@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detección de vasos retinianos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f8fb;
+      --surface: #ffffff;
+      --text: #152535;
+      --muted: #5c6d7e;
+      --border: #dde5ee;
+      --accent: #0b7a94;
+      --accent-hover: #095f73;
+      --accent-soft: #e8f4f8;
+      --accent-border: #b3d9e8;
+      --warn-bg: #fffbeb;
+      --warn-border: #f0dfa8;
+      --warn-text: #8a6918;
+      --shadow: 0 1px 2px rgba(30, 51, 71, 0.05);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 318px;
+      min-width: 318px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.35rem 1.25rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sidebar > * { flex-shrink: 0; }
+
+    .brand {
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      margin: 0.45rem 0 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.55rem;
+      padding: 0;
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .btn-link:hover { color: var(--accent-hover); }
+
+    .steps-guide {
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-border);
+      border-radius: 10px;
+      padding: 0.7rem 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .steps-guide-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin: 0 0 0.5rem;
+    }
+
+    .steps-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 0.55rem;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+      font-size: 0.76rem;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .step-item:last-child { margin-bottom: 0; }
+
+    .step-badge {
+      flex-shrink: 0;
+      width: 1.4rem;
+      height: 1.4rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.68rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.05rem;
+    }
+
+    .step-text strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+    }
+
+    .step-text span {
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .btn-ghost {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+      border-radius: 8px;
+      padding: 0.55rem 0.65rem;
+      font-size: 0.76rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      text-align: left;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-ghost:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .sidebar-section {
+      margin-bottom: 1.1rem;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 0.55rem;
+    }
+
+    .sidebar-section-title .paso {
+      color: var(--accent);
+      margin-right: 0.15rem;
+    }
+
+    .fields-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-family: inherit;
+    }
+
+    select:focus {
+      outline: 2px solid var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .sidebar-action {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .btn-analyze {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-analyze:hover:not(:disabled) { background: var(--accent-hover); }
+
+    .btn-analyze:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .status-bar {
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-border);
+      border-radius: 8px;
+      padding: 0.6rem 0.7rem;
+      font-size: 0.76rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .metrics-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.55rem;
+    }
+
+    .metric {
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-border);
+      border-radius: 10px;
+      padding: 0.55rem 0.4rem;
+      text-align: center;
+    }
+
+    .metric span {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--muted);
+      line-height: 1.2;
+      margin-bottom: 0.2rem;
+    }
+
+    .metric strong {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .sidebar-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-top: 0.55rem;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-footer {
+      margin-top: 0.65rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .sidebar-footer a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .sidebar-footer a:hover {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      padding: 1rem 1.25rem;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .content-area {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spinner-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .spinner {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .results-section {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.55rem;
+      min-height: 0;
+    }
+
+    .results-section.visible { display: flex; }
+
+    .result-row {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .row-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .grid-3 {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+      min-height: 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .card:hover {
+      border-color: var(--accent-border);
+      box-shadow: 0 2px 8px rgba(8, 126, 154, 0.1);
+    }
+
+    .card-head {
+      padding: 0.4rem 0.55rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+
+    .card-head h3 {
+      margin: 0;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .card-head p { display: none; }
+
+    .card-img-wrap {
+      cursor: zoom-in;
+      position: relative;
+      background: #0d1117;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    .card-img-wrap::after {
+      content: "Ampliar";
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--accent);
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 2px 5px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .card-img-wrap:hover::after { opacity: 1; }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      min-height: 120px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .preview-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .preview-area .card {
+      max-width: 360px;
+      width: 100%;
+      max-height: 55vh;
+    }
+
+    .preview-area .card-img-wrap {
+      min-height: 220px;
+    }
+
+    .preview-hint {
+      margin-top: 0.75rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .notice {
+      padding: 0.55rem 0.65rem;
+      border-radius: 8px;
+      background: var(--warn-bg);
+      color: var(--warn-text);
+      border: 1px solid var(--warn-border);
+      font-size: 0.72rem;
+      line-height: 1.35;
+    }
+
+    .hidden { display: none !important; }
+
+    /* ── Modal ── */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(26, 43, 60, 0.55);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-box {
+      max-width: 92vw;
+      max-height: 90vh;
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(26, 43, 60, 0.18);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.55rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 0.2rem;
+    }
+
+    .modal-close:hover { color: var(--text); }
+
+    .modal-body {
+      overflow: auto;
+      padding: 0.5rem;
+      background: #111;
+    }
+
+    .modal-body img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(90vh - 52px);
+      margin: 0 auto;
+    }
+
+    .modal-body--text {
+      background: var(--surface);
+      padding: 1rem 1.15rem 1.15rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text);
+      max-width: 480px;
+    }
+
+    .modal-body--text p {
+      margin: 0 0 0.75rem;
+    }
+
+    .modal-body--text p:last-child { margin-bottom: 0; }
+
+    .modal-body--text ul,
+    .modal-body--text ol {
+      margin: 0.35rem 0 0.75rem;
+      padding-left: 1.2rem;
+    }
+
+    .modal-body--text li {
+      margin-bottom: 0.45rem;
+      line-height: 1.45;
+    }
+
+    .modal-body--text .guide-item strong {
+      color: var(--accent);
+    }
+
+    .modal-box--text {
+      max-width: min(520px, 92vw);
+    }
+
+    @media (max-width: 900px) {
+      .app { flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        min-width: unset;
+        height: auto;
+        position: static;
+      }
+      .main { max-height: none; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .metrics-block { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>Detección automática de vasos retinianos</h1>
+        <p>Demo interactiva · Dataset DRIVE</p>
+        <button type="button" class="btn-link" id="btn-about">¿Qué es esto y para qué sirve?</button>
+      </div>
+
+      <div class="steps-guide">
+        <p class="steps-guide-title">Cómo usar esta demo</p>
+        <ol class="steps-list">
+          <li class="step-item">
+            <span class="step-badge">1</span>
+            <div class="step-text">
+              <strong>Configura</strong>
+              <span>Elige tipo de imagen, retina y método de detección.</span>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-badge">2</span>
+            <div class="step-text">
+              <strong>Analiza</strong>
+              <span>Pulsa «Analizar vasos» y espera unos segundos.</span>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-badge">3</span>
+            <div class="step-text">
+              <strong>Interpreta</strong>
+              <span>Revisa las 6 imágenes. Haz clic para ampliar.</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <button type="button" class="btn-ghost" id="btn-guide">
+        Guía: qué significa cada una de las 6 imágenes
+      </button>
+
+      <div class="sidebar-section">
+        <p class="sidebar-section-title"><span class="paso">Paso 1</span> · Parámetros</p>
+        <div class="fields-stack">
+          <div class="field">
+            <label for="dataset">Tipo de imagen</label>
+            <select id="dataset"></select>
+          </div>
+          <div class="field">
+            <label for="image">Imagen de retina</label>
+            <select id="image"></select>
+          </div>
+          <div class="field">
+            <label for="method">Método de detección</label>
+            <select id="method"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section sidebar-action">
+        <p class="sidebar-section-title"><span class="paso">Paso 2</span> · Análisis</p>
+        <button class="btn-analyze" id="btn-analyze" type="button">Analizar vasos</button>
+        <div class="status-bar" id="status-bar">
+          Elige imagen y método, luego pulsa <strong>Analizar vasos</strong>.
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-section-title"><span class="paso">Paso 3</span> · Resultados</p>
+        <div class="metrics-block">
+          <div class="metric">
+            <span>Tiempo</span>
+            <strong id="metric-time">—</strong>
+          </div>
+          <div class="metric">
+            <span>Coincidencia</span>
+            <strong id="metric-dice">—</strong>
+          </div>
+          <div class="metric">
+            <span>Estricta</span>
+            <strong id="metric-jaccard">—</strong>
+          </div>
+        </div>
+        <p class="sidebar-note">
+          Coincidencia: similitud del trazo automático vs. manual (0–100 %).
+        </p>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="notice">
+          <strong>Aviso:</strong> demo de investigación. No diagnostica ni sustituye evaluación clínica.
+        </div>
+        <div class="sidebar-footer" id="footer-author"></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="content-area">
+        <div class="spinner-wrap hidden" id="spinner">
+          <div class="spinner"></div>
+          <span id="spinner-text">Analizando vasos…</span>
+        </div>
+
+        <div id="preview-area" class="preview-area">
+          <div id="preview-card"></div>
+          <p class="preview-hint">Pulsa <strong>Analizar vasos</strong> en el panel izquierdo para ver las 6 imágenes.</p>
+        </div>
+
+        <div class="results-section" id="results">
+          <div class="result-row">
+            <p class="row-label">Fila A — Programa</p>
+            <div class="grid-3" id="row-a"></div>
+          </div>
+          <div class="result-row" id="row-b-wrap">
+            <p class="row-label" id="row-b-label">Fila B — Referencia y comparación</p>
+            <div class="grid-3" id="row-b"></div>
+          </div>
+          <p class="preview-hint hidden" id="no-reference">
+            Imágenes 4–6 solo en conjunto con referencia experto.
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="modal-image" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span id="modal-image-title">Imagen</span>
+        <button class="modal-close" data-close-modal type="button" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img" src="" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-info" role="dialog" aria-modal="true">
+    <div class="modal-box modal-box--text">
+      <div class="modal-header">
+        <span id="modal-info-title">Información</span>
+        <button class="modal-close" data-close-modal type="button" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="modal-body modal-body--text" id="modal-info-body"></div>
+    </div>
+  </div>
+
+  <script>
+    const PANELS_A = [
+      { n: 1, file: "01_original.png", title: "Foto original", desc: "Retinografía sin modificar." },
+      { n: 2, file: "02_mask_pred.png", title: "Mapa automático", desc: "Blanco = vaso detectado." },
+      { n: 3, file: "03_overlay_pred.png", title: "Vasos programa (rojo)", desc: "Trazo automático." },
+    ];
+
+    const PANELS_B = [
+      { n: 4, file: "04_gt.png", title: "Referencia experto", desc: "Trazo manual dataset." },
+      { n: 5, file: "05_overlay_gt.png", title: "Vasos experto (rojo)", desc: "Referencia sobre foto." },
+      { n: 6, file: "06_blend.png", title: "Comparación", desc: "Superposición ambos trazos." },
+    ];
+
+    let manifest = null;
+    let analyzed = false;
+    let lastSelection = "";
+
+    function pct(value) {
+      if (value == null) return "—";
+      return `${(value * 100).toFixed(1)}%`;
+    }
+
+    function selectionKey() {
+      return [
+        document.getElementById("dataset").value,
+        document.getElementById("image").value,
+        document.getElementById("method").value,
+      ].join("|");
+    }
+
+    function assetBase() {
+      const ds = document.getElementById("dataset").value;
+      const img = document.getElementById("image").value;
+      const method = document.getElementById("method").value;
+      return `assets/${ds}/${img}/${method}`;
+    }
+
+    function currentMetrics() {
+      const dsId = document.getElementById("dataset").value;
+      const imgId = document.getElementById("image").value;
+      const method = document.getElementById("method").value;
+      const dataset = manifest.datasets.find((d) => d.id === dsId);
+      const image = dataset.images.find((i) => i.id === imgId);
+      return image.methods[method];
+    }
+
+    function currentDataset() {
+      return manifest.datasets.find((d) => d.id === document.getElementById("dataset").value);
+    }
+
+    function updateMetrics() {
+      const metrics = currentMetrics();
+      document.getElementById("metric-time").textContent =
+        metrics.elapsed != null ? `${metrics.elapsed.toFixed(1)}s` : "—";
+      document.getElementById("metric-dice").textContent = pct(metrics.dice);
+      document.getElementById("metric-jaccard").textContent = pct(metrics.jaccard);
+    }
+
+    function updateStatusBar() {
+      const img = document.getElementById("image").value;
+      const method = document.getElementById("method").value;
+      const ds = currentDataset();
+      const ref = ds.has_reference
+        ? "Con referencia manual."
+        : "Sin referencia manual.";
+      document.getElementById("status-bar").innerHTML =
+        `<strong>${img}</strong> · ${method} · ${ref}`;
+    }
+
+    const ABOUT_HTML = `
+      <p>
+        Esta demo toma una <strong>fotografía del fondo de ojo</strong> (retinografía)
+        y dibuja automáticamente por dónde pasan los <strong>vasos sanguíneos</strong>,
+        como si alguien los resaltara sobre la imagen.
+      </p>
+      <p>
+        Es un <strong>proyecto de visión por computador</strong> que muestra cómo el
+        procesamiento clásico de imágenes puede apoyar el análisis de retinografías.
+        Usa fotos del dataset de investigación <strong>DRIVE</strong> y métodos como
+        Frangi y Gabor (sin modelos de deep learning).
+      </p>
+      <p>
+        <strong>Importante:</strong> es una demo técnica. No diagnostica enfermedades
+        ni sustituye la evaluación de un profesional de la salud visual.
+      </p>
+    `;
+
+    const GUIDE_HTML = `
+      <p>Tras pulsar <strong>Analizar vasos</strong> verás 6 imágenes numeradas:</p>
+      <ol>
+        <li class="guide-item"><strong>1. Foto original</strong> — La retinografía sin modificar.</li>
+        <li class="guide-item"><strong>2. Mapa automático</strong> — Blanco = vaso detectado por el programa; negro = fondo.</li>
+        <li class="guide-item"><strong>3. Vasos del programa (rojo)</strong> — El trazo automático superpuesto sobre la foto.</li>
+        <li class="guide-item"><strong>4. Referencia del experto</strong> — Trazo manual de referencia del dataset (dibujo hecho por observadores entrenados).</li>
+        <li class="guide-item"><strong>5. Vasos del experto (rojo)</strong> — Esa referencia manual pintada sobre la foto.</li>
+        <li class="guide-item"><strong>6. Comparación</strong> — Superposición programa + experto: donde coinciden se ve más intenso; donde solo uno marcó, se nota la diferencia.</li>
+      </ol>
+      <p>Las imágenes 4–6 solo aparecen cuando eliges un conjunto <strong>con referencia experto</strong>.</p>
+    `;
+
+    function closeAllModals() {
+      document.querySelectorAll(".modal.open").forEach((el) => el.classList.remove("open"));
+      document.body.style.overflow = "";
+    }
+
+    function openImageModal(title, src) {
+      closeAllModals();
+      document.getElementById("modal-image-title").textContent = title;
+      document.getElementById("modal-img").src = src;
+      document.getElementById("modal-img").alt = title;
+      document.getElementById("modal-image").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function openInfoModal(title, html) {
+      closeAllModals();
+      document.getElementById("modal-info-title").textContent = title;
+      document.getElementById("modal-info-body").innerHTML = html;
+      document.getElementById("modal-info").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function buildCard(panel) {
+      const base = assetBase();
+      const src = `${base}/${panel.file}`;
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="card-head">
+          <h3>${panel.n}. ${panel.title}</h3>
+          <p>${panel.desc}</p>
+        </div>
+        <div class="card-img-wrap" tabindex="0" role="button" aria-label="Ampliar ${panel.title}">
+          <img src="${src}" alt="${panel.title}" loading="lazy" />
+        </div>
+      `;
+      const wrap = card.querySelector(".card-img-wrap");
+      wrap.addEventListener("click", () => openImageModal(`${panel.n}. ${panel.title}`, src));
+      wrap.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openImageModal(`${panel.n}. ${panel.title}`, src);
+        }
+      });
+      return card;
+    }
+
+    function renderPreview() {
+      const container = document.getElementById("preview-card");
+      container.innerHTML = "";
+      container.appendChild(buildCard(PANELS_A[0]));
+    }
+
+    function renderResults() {
+      const dataset = currentDataset();
+      const rowA = document.getElementById("row-a");
+      const rowB = document.getElementById("row-b");
+
+      rowA.innerHTML = "";
+      PANELS_A.forEach((p) => rowA.appendChild(buildCard(p)));
+
+      const hasRef = dataset.has_reference;
+      document.getElementById("row-b-wrap").classList.toggle("hidden", !hasRef);
+      document.getElementById("no-reference").classList.toggle("hidden", hasRef);
+
+      rowB.innerHTML = "";
+      if (hasRef) {
+        PANELS_B.forEach((p) => rowB.appendChild(buildCard(p)));
+      }
+    }
+
+    function showPreviewState() {
+      analyzed = false;
+      document.getElementById("preview-area").classList.remove("hidden");
+      document.getElementById("results").classList.remove("visible");
+      document.getElementById("spinner").classList.add("hidden");
+      document.getElementById("btn-analyze").disabled = false;
+      renderPreview();
+      updateMetrics();
+      updateStatusBar();
+    }
+
+    function showResultsState() {
+      analyzed = true;
+      lastSelection = selectionKey();
+      document.getElementById("preview-area").classList.add("hidden");
+      document.getElementById("results").classList.add("visible");
+      document.getElementById("spinner").classList.add("hidden");
+      document.getElementById("btn-analyze").disabled = false;
+      renderResults();
+      updateMetrics();
+      updateStatusBar();
+    }
+
+    function runAnalysis() {
+      const metrics = currentMetrics();
+      const delayMs = Math.min(Math.max((metrics.elapsed || 1) * 30, 800), 2500);
+
+      document.getElementById("btn-analyze").disabled = true;
+      document.getElementById("preview-area").classList.add("hidden");
+      document.getElementById("results").classList.remove("visible");
+      document.getElementById("spinner").classList.remove("hidden");
+
+      document.getElementById("spinner-text").textContent =
+        `Analizando con ${document.getElementById("method").selectedOptions[0].textContent.split("—")[0].trim()}…`;
+
+      setTimeout(showResultsState, delayMs);
+    }
+
+    function fillImages() {
+      const dsId = document.getElementById("dataset").value;
+      const dataset = manifest.datasets.find((d) => d.id === dsId);
+      const imageSelect = document.getElementById("image");
+      imageSelect.innerHTML = "";
+      dataset.images.forEach((img) => {
+        const opt = document.createElement("option");
+        opt.value = img.id;
+        opt.textContent = img.label;
+        imageSelect.appendChild(opt);
+      });
+      if (dsId === "train") {
+        imageSelect.value = "22_training";
+      }
+    }
+
+    function initSelectors() {
+      const datasetSelect = document.getElementById("dataset");
+      manifest.datasets.forEach((ds) => {
+        const opt = document.createElement("option");
+        opt.value = ds.id;
+        opt.textContent = ds.label;
+        datasetSelect.appendChild(opt);
+      });
+
+      const methodSelect = document.getElementById("method");
+      manifest.methods.forEach((method) => {
+        const opt = document.createElement("option");
+        opt.value = method.id;
+        opt.textContent = method.label;
+        methodSelect.appendChild(opt);
+      });
+      methodSelect.value = "gabor";
+
+      datasetSelect.addEventListener("change", () => {
+        fillImages();
+        showPreviewState();
+      });
+      document.getElementById("image").addEventListener("change", showPreviewState);
+      methodSelect.addEventListener("change", showPreviewState);
+
+      document.getElementById("btn-analyze").addEventListener("click", runAnalysis);
+      document.getElementById("btn-about").addEventListener("click", () => {
+        openInfoModal("¿Qué es esta demo?", ABOUT_HTML);
+      });
+      document.getElementById("btn-guide").addEventListener("click", () => {
+        openInfoModal("Guía de las 6 imágenes", GUIDE_HTML);
+      });
+      document.querySelectorAll("[data-close-modal]").forEach((btn) => {
+        btn.addEventListener("click", closeAllModals);
+      });
+      document.querySelectorAll(".modal").forEach((modal) => {
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) closeAllModals();
+        });
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeAllModals();
+      });
+
+      fillImages();
+      showPreviewState();
+    }
+
+    async function boot() {
+      const response = await fetch("manifest.json");
+      manifest = await response.json();
+      document.getElementById("footer-author").innerHTML =
+        `Autor: <a href="${manifest.github}" target="_blank" rel="noopener noreferrer"><strong>${manifest.author}</strong></a>`;
+      initSelectors();
+    }
+
+    boot().catch(() => {
+      document.querySelector(".content-area").innerHTML =
+        `<p>No se pudo cargar la demo. Comprueba la conexión o vuelve a intentarlo más tarde.</p>`;
+    });
+  </script>
+</body>
+</html>

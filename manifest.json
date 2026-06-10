@@ -1,0 +1,670 @@
+{
+  "author": "Carlos César Sánchez Coronel",
+  "github": "https://github.com/cesarsanco-ai",
+  "methods": [
+    {
+      "id": "gabor",
+      "label": "Gabor — mayor precisión (recomendado)"
+    },
+    {
+      "id": "frangi",
+      "label": "Frangi — más rápido"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "train",
+      "label": "Con referencia experto (20)",
+      "has_reference": true,
+      "images": [
+        {
+          "id": "21_training",
+          "label": "21 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.258863800934764,
+              "jaccard": 0.14867521626035932,
+              "elapsed": 37.49
+            },
+            "frangi": {
+              "dice": 0.17812869551033725,
+              "jaccard": 0.09777238110692682,
+              "elapsed": 0.26
+            }
+          }
+        },
+        {
+          "id": "22_training",
+          "label": "22 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.30269005249662706,
+              "jaccard": 0.17833516673950062,
+              "elapsed": 38.11
+            },
+            "frangi": {
+              "dice": 0.21439041235423012,
+              "jaccard": 0.12006567047889362,
+              "elapsed": 0.24
+            }
+          }
+        },
+        {
+          "id": "23_training",
+          "label": "23 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.21596255561574465,
+              "jaccard": 0.12105270340347717,
+              "elapsed": 38.57
+            },
+            "frangi": {
+              "dice": 0.16194291537208907,
+              "jaccard": 0.08810548743368989,
+              "elapsed": 0.37
+            }
+          }
+        },
+        {
+          "id": "24_training",
+          "label": "24 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.3520608050561237,
+              "jaccard": 0.2136370116909039,
+              "elapsed": 39.28
+            },
+            "frangi": {
+              "dice": 0.27041306672843857,
+              "jaccard": 0.15634546117722153,
+              "elapsed": 0.24
+            }
+          }
+        },
+        {
+          "id": "25_training",
+          "label": "25 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.31222855421384277,
+              "jaccard": 0.1849945707953413,
+              "elapsed": 36.95
+            },
+            "frangi": {
+              "dice": 0.20727102803738318,
+              "jaccard": 0.11561760382020832,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "26_training",
+          "label": "26 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.2955608478523317,
+              "jaccard": 0.1734065117431221,
+              "elapsed": 36.42
+            },
+            "frangi": {
+              "dice": 0.20183425814631256,
+              "jaccard": 0.11224452421068054,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "27_training",
+          "label": "27 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.2943619250947056,
+              "jaccard": 0.172581703835997,
+              "elapsed": 36.88
+            },
+            "frangi": {
+              "dice": 0.1978385413888385,
+              "jaccard": 0.10977847764056783,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "28_training",
+          "label": "28 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.33477276848375764,
+              "jaccard": 0.20103728917460498,
+              "elapsed": 36.04
+            },
+            "frangi": {
+              "dice": 0.22052298971446885,
+              "jaccard": 0.12392573123441712,
+              "elapsed": 0.24
+            }
+          }
+        },
+        {
+          "id": "29_training",
+          "label": "29 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.29429203889635547,
+              "jaccard": 0.17253366086533337,
+              "elapsed": 36.02
+            },
+            "frangi": {
+              "dice": 0.2032529121136716,
+              "jaccard": 0.11312271687206454,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "30_training",
+          "label": "30 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.2727731764736742,
+              "jaccard": 0.1579255097004442,
+              "elapsed": 36.73
+            },
+            "frangi": {
+              "dice": 0.1937696970842409,
+              "jaccard": 0.10727851081417615,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "31_training",
+          "label": "31 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.20440024036987528,
+              "jaccard": 0.11383396509920432,
+              "elapsed": 36.16
+            },
+            "frangi": {
+              "dice": 0.15222707996107085,
+              "jaccard": 0.08238408427257593,
+              "elapsed": 0.24
+            }
+          }
+        },
+        {
+          "id": "32_training",
+          "label": "32 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.27624644166861284,
+              "jaccard": 0.16025866362011892,
+              "elapsed": 36.74
+            },
+            "frangi": {
+              "dice": 0.2022165960284045,
+              "jaccard": 0.11248106728634562,
+              "elapsed": 0.31
+            }
+          }
+        },
+        {
+          "id": "33_training",
+          "label": "33 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.29192992922417765,
+              "jaccard": 0.17091215063067067,
+              "elapsed": 39.93
+            },
+            "frangi": {
+              "dice": 0.19844149418652593,
+              "jaccard": 0.11014990273486669,
+              "elapsed": 0.45
+            }
+          }
+        },
+        {
+          "id": "34_training",
+          "label": "34 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.28823352029431276,
+              "jaccard": 0.16838366898262327,
+              "elapsed": 37.2
+            },
+            "frangi": {
+              "dice": 0.23803151569424585,
+              "jaccard": 0.13509408245064858,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "35_training",
+          "label": "35 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.32023113338902814,
+              "jaccard": 0.19063999801062656,
+              "elapsed": 37.42
+            },
+            "frangi": {
+              "dice": 0.22498568588724982,
+              "jaccard": 0.12675147693088326,
+              "elapsed": 0.26
+            }
+          }
+        },
+        {
+          "id": "36_training",
+          "label": "36 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.3440522776969078,
+              "jaccard": 0.20776759620068194,
+              "elapsed": 36.54
+            },
+            "frangi": {
+              "dice": 0.26513551271304836,
+              "jaccard": 0.1528277941337525,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "37_training",
+          "label": "37 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.30991735537190085,
+              "jaccard": 0.18337408312958436,
+              "elapsed": 36.36
+            },
+            "frangi": {
+              "dice": 0.21881750019232932,
+              "jaccard": 0.12284956775398191,
+              "elapsed": 0.25
+            }
+          }
+        },
+        {
+          "id": "38_training",
+          "label": "38 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.291792601836866,
+              "jaccard": 0.17081801785347367,
+              "elapsed": 36.33
+            },
+            "frangi": {
+              "dice": 0.22303221145032406,
+              "jaccard": 0.1255128049520573,
+              "elapsed": 0.24
+            }
+          }
+        },
+        {
+          "id": "39_training",
+          "label": "39 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.287300361789422,
+              "jaccard": 0.16774707916070578,
+              "elapsed": 41.58
+            },
+            "frangi": {
+              "dice": 0.22568528642477614,
+              "jaccard": 0.1271957475740157,
+              "elapsed": 0.25
+            }
+          }
+        },
+        {
+          "id": "40_training",
+          "label": "40 Training",
+          "methods": {
+            "gabor": {
+              "dice": 0.2961606878150015,
+              "jaccard": 0.17381961180083694,
+              "elapsed": 37.59
+            },
+            "frangi": {
+              "dice": 0.1969073533315636,
+              "jaccard": 0.10920534432625419,
+              "elapsed": 0.25
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "test",
+      "label": "Solo predicción (20)",
+      "has_reference": false,
+      "images": [
+        {
+          "id": "01_test",
+          "label": "01 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.21
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.24
+            }
+          }
+        },
+        {
+          "id": "02_test",
+          "label": "02 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.01
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.27
+            }
+          }
+        },
+        {
+          "id": "03_test",
+          "label": "03 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 37.23
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.24
+            }
+          }
+        },
+        {
+          "id": "04_test",
+          "label": "04 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.11
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.22
+            }
+          }
+        },
+        {
+          "id": "05_test",
+          "label": "05 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 37.15
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "06_test",
+          "label": "06 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.96
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.22
+            }
+          }
+        },
+        {
+          "id": "07_test",
+          "label": "07 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.37
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "08_test",
+          "label": "08 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.94
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.22
+            }
+          }
+        },
+        {
+          "id": "09_test",
+          "label": "09 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.78
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "10_test",
+          "label": "10 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.2
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "11_test",
+          "label": "11 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 38.0
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "12_test",
+          "label": "12 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.18
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.22
+            }
+          }
+        },
+        {
+          "id": "13_test",
+          "label": "13 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 37.02
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.24
+            }
+          }
+        },
+        {
+          "id": "14_test",
+          "label": "14 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.79
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "15_test",
+          "label": "15 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.52
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "16_test",
+          "label": "16 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.48
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "17_test",
+          "label": "17 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 37.81
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.66
+            }
+          }
+        },
+        {
+          "id": "18_test",
+          "label": "18 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 43.0
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "19_test",
+          "label": "19 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 36.82
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.23
+            }
+          }
+        },
+        {
+          "id": "20_test",
+          "label": "20 Test",
+          "methods": {
+            "gabor": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 35.77
+            },
+            "frangi": {
+              "dice": null,
+              "jaccard": null,
+              "elapsed": 0.22
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
