@@ -4,21 +4,23 @@ Demo interactiva que muestra cómo la **visión por computador** detecta vasos s
 
 **Autor:** [Carlos César Sánchez Coronel](https://github.com/cesarsanco-ai)
 
-**Demo en vivo:** [cesarsanco-ai.github.io/retina-vessel-demo](https://cesarsanco-ai.github.io/retina-vessel-demo/)
+**Demo en vivo:** [cesarsanco-ai.github.io/retina-vessel-image-processing](https://cesarsanco-ai.github.io/retina-vessel-image-processing/)
 
 ---
 
-## Contenido
+## Vista previa
+
+Captura de la demo desplegada (imagen 22 · Gabor · con referencia experto):
+
+[![Demo desplegada — detección de vasos retinianos](docs/demo-screenshot.png)](https://cesarsanco-ai.github.io/retina-vessel-image-processing/)
+
+Abre el link para probarla: elige imagen y método, pulsa **Analizar vasos** y revisa las 6 imágenes numeradas.
+
+---
+
+## Contenido del repositorio
 
 Solo la demo estática: `index.html`, `manifest.json` y PNG precalculados en `assets/`.
-
-El pipeline Python y el dataset DRIVE viven en local (`../PROYECTO/`, `../CLASE-CURSO/`) y **no** forman parte de este repositorio.
-
----
-
-## Publicar desde cero
-
-Ver [`PUBLICAR.md`](PUBLICAR.md).
 
 ---
 
